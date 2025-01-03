@@ -20,7 +20,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
     'model_class' => Goal::class,
     'label' => 'Goal',
 ])]
-final class CategoryAdmin extends AbstractAdmin
+final class GoalAdmin extends AbstractAdmin
 {
     protected function configureFormFields(FormMapper $form): void
     {
