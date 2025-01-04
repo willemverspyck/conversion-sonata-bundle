@@ -9,11 +9,13 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Spyck\ConversionBundle\Entity\Target;
+use Spyck\ConversionSonataBundle\Controller\TargetController;
 use Spyck\SonataExtension\Form\Type\ParameterType;
 use Spyck\SonataExtension\Utility\DateTimeUtility;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 
 #[AutoconfigureTag('sonata.admin', [
+    'controller' => TargetController::class,
     'group' => 'Conversion',
     'manager_type' => 'orm',
     'model_class' => Target::class,
@@ -68,6 +70,9 @@ final class TargetAdmin extends AbstractAdmin
                 'actions' => [
                     'show' => [],
                     'edit' => [],
+                    'clone' => [
+                        'template' => '@SpyckSonataExtension/list_action_clone.html.twig',
+                    ],
                     'delete' => [],
                 ],
             ]);
@@ -88,5 +93,10 @@ final class TargetAdmin extends AbstractAdmin
             ->add('timestampUpdated', null, [
                 'format' => DateTimeUtility::FORMAT_DATETIME,
             ]);
+    }
+
+    protected function getAddRoutes(): iterable
+    {
+        yield 'clone';
     }
 }

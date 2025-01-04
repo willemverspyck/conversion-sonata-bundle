@@ -10,11 +10,13 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Sonata\Form\Type\DatePickerType;
 use Spyck\ConversionBundle\Entity\Goal;
+use Spyck\ConversionSonataBundle\Controller\GoalController;
 use Spyck\SonataExtension\Utility\DateTimeUtility;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 #[AutoconfigureTag('sonata.admin', [
+    'controller' => GoalController::class,
     'group' => 'Conversion',
     'manager_type' => 'orm',
     'model_class' => Goal::class,
@@ -62,6 +64,9 @@ final class GoalAdmin extends AbstractAdmin
                 'actions' => [
                     'show' => [],
                     'edit' => [],
+                    'clone' => [
+                        'template' => '@SpyckSonataExtension/list_action_clone.html.twig',
+                    ],
                     'delete' => [],
                 ],
             ]);
@@ -83,5 +88,10 @@ final class GoalAdmin extends AbstractAdmin
             ->add('timestampUpdated', null, [
                 'format' => DateTimeUtility::FORMAT_DATETIME,
             ]);
+    }
+
+    protected function getAddRoutes(): iterable
+    {
+        yield 'clone';
     }
 }
